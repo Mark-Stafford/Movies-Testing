@@ -58,9 +58,20 @@ const filterByGenre = (movieList, genreId) =>
        cy.get(".MuiCardHeader-content").each(($card, index) => {
          cy.wrap($card).find("p").contains(matchingMovies[index].title);
        });
+      })
+       it("should display no movies when with xyz is typed", () => {
+        let searchString = "xyz";
+        let matchingMovies = filterByTitle(movies, searchString);
+        cy.get("#filled-search").clear().type(searchString); // Enter xyz in text box
+        cy.get(".MuiCardHeader-content").should(
+          "have.length",
+          matchingMovies.length
+        );
+      })
+       
      });
    })
    describe("By movie genre" ,() => {
      // More later
    })
- })
+ 
