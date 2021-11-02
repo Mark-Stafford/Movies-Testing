@@ -23,7 +23,10 @@ const filterByGenre = (movieList, genreId) =>
       cy.visit("/")
     });
 
-
+    describe("Home Page ", () => {
+      before(() => { 
+        cy.visit("/")
+      });
   
     describe("Base test", () => {
       it("displays page header", () => {
@@ -68,10 +71,26 @@ const filterByGenre = (movieList, genreId) =>
           matchingMovies.length
         );
       })
+    });
        
+     describe("By movie genre", () => {
+      it("should display movies with the specified genre only", () => {
+         const selectedGenreId = 35;
+         const selectedGenreText = "Comedy";
+         const matchingMovies = filterByGenre(movies, selectedGenreId);
+         cy.get("#genre-select").click();
+         cy.get("li").contains(selectedGenreText).click();
+         cy.get(".MuiCardHeader-content").should(
+           "have.length",
+           matchingMovies.length
+         );
+         cy.get(".MuiCardHeader-content").each(($card, index) => {
+           cy.wrap($card).find("p").contains(matchingMovies[index].title);
+         });
+       });
      });
-   })
-   describe("By movie genre" ,() => {
-     // More later
-   })
+   });
+  });
+
+  
  
