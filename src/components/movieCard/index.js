@@ -1,5 +1,5 @@
-
 import React, { useContext  } from "react";
+import Avatar from "@material-ui/core/Avatar";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
@@ -13,9 +13,8 @@ import CalendarIcon from "@material-ui/icons/CalendarTodayTwoTone";
 import StarRateIcon from "@material-ui/icons/StarRate";
 import IconButton from "@material-ui/core/IconButton";
 import Grid from "@material-ui/core/Grid";
-import img from '../../images/film-poster-placeholder.png';
+import img from '../../images/film-poster-placeholder.png'
 import { Link } from "react-router-dom";
-import Avatar from "@material-ui/core/Avatar";
 import { MoviesContext } from "../../contexts/moviesContext";
 
 const useStyles = makeStyles({
@@ -40,6 +39,7 @@ export default function MovieCard({ movie, action }) {
     e.preventDefault();
     addToFavorites(movie);
   };
+
   return (
     <Card className={classes.card}>
       <CardHeader
@@ -81,17 +81,13 @@ export default function MovieCard({ movie, action }) {
           </Grid>
         </Grid>
       </CardContent>
-      <CardActions disableSpacing> 
+      <CardActions disableSpacing>
       {action(movie)}
-      
-     
-        <Button variant="outlined" size="medium" color="primary">
         <Link to={`/movies/${movie.id}`}>
           <Button variant="outlined" size="medium" color="primary">
-          More Info ...
+            More Info ...
           </Button>
         </Link>
-        </Button>
       </CardActions>
     </Card>
   );

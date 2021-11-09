@@ -74,14 +74,18 @@ export const getMovieReviews = (id) => {
     });
 };
 
-export const getMovieUpcoming = () => {
+export const getUpcomingMovies = () => {
   var key = "77885d4f621d9af0c6c5c522b1c9df9d";
   return fetch(
     `https://api.themoviedb.org/3/movie/upcoming?api_key=${key}`
-  )
-    .then((res) => res.json())
-    .then((json) => {
-      // console.log(json.results);
-      return json.results;
-    });
+  ).then((response) => {
+    if (!response.ok) {
+      throw new Error(response.json().message);
+    }
+    return response.json();
+  })
+  .catch((error) => {
+     throw error
+  });
+  
 };
