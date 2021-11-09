@@ -81,11 +81,10 @@ export default function MovieCard({ movie, action }) {
           </Grid>
         </Grid>
       </CardContent>
-      <CardActions disableSpacing> {action(movie)}
+      <CardActions disableSpacing> 
+      {action(movie)}
       
-      <IconButton aria-label="add to favorites" onClick={handleAddToFavorite}>
-        <FavoriteIcon color="primary" fontSize="large" />
-    </IconButton>
+     
         <Button variant="outlined" size="medium" color="primary">
         <Link to={`/movies/${movie.id}`}>
           <Button variant="outlined" size="medium" color="primary">
