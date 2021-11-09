@@ -73,10 +73,17 @@ const ReviewForm = ({ movie, history }) => {
     setRating(event.target.value);
   };
 
+  const handleSnackClose = (event) => {     // NEW
+    setOpen(false);
+    history.push("/movies/favorites");
+  };
+
   const onSubmit = (review) => {
     review.movieId = movie.id;
     review.rating = rating;
+    // console.log(review);
     context.addReview(movie, review);
+    setOpen(true);   // NEW
   };
 
   return (
@@ -84,6 +91,23 @@ const ReviewForm = ({ movie, history }) => {
       <Typography component="h2" variant="h3">
         Write a review
       </Typography>
+
+      <Snackbar
+        className={classes.snack}
+        anchorOrigin={{ vertical: "top", horizontal: "right" }}
+        open={open}
+        onClose={handleSnackClose}
+      >
+        <MuiAlert
+          severity="success"
+          variant="filled"
+          onClose={handleSnackClose}
+        >
+          <Typography variant="h4">
+            Thank you for submitting a review
+          </Typography>
+        </MuiAlert>
+      </Snackbar>
       <form
         className={classes.form}
         onSubmit={handleSubmit(onSubmit)}
