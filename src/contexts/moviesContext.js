@@ -8,7 +8,11 @@ const MoviesContextProvider = (props) => {
   const [playlists, setPlaylists] = useState( [] ) 
 
   const addToFavorites = (movie) => {
-    setFavorites([...favorites,movie.id])
+    let newFavorites = [];
+    if (!favorites.includes(movie.id)){
+      newFavorites = [...favorites, movie.id];
+    }
+    setFavorites(newFavorites)
   };
   // We will use this function in a later section
   const removeFromFavorites = (movie) => {
