@@ -54,3 +54,10 @@ build_jobX:
     - develop
   script:
     - echo "build job X on demoBranch works"
+
+exercise_jobX:
+  stage: build
+  only:
+    - main
+  script:
+    - echo "exercise complete"
