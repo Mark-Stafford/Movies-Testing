@@ -104,6 +104,8 @@ describe("Home Page ", () => {
         "have.length",
         matchingMovies.length
       );
+
+      
       cy.get(".MuiCardHeader-content").each(($card, index) => {
         cy.wrap($card).find("p").contains(matchingMovies[index].title);
       });
