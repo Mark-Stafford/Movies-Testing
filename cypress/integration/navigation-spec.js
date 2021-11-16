@@ -34,6 +34,8 @@ describe("Navigation", () => {
       cy.url().should("include", `/movies/${movies[0].id}`);
       cy.get("h3").contains(movies[0].title);
     });
+
+    
     describe("The site header", () => {
         describe("when the viewport is desktop scale", () => {
           it("should allow navigation to the Favourites page from the link", () => {
