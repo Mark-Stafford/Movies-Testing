@@ -18,8 +18,17 @@ install_dependencies:
       - node_modules/
 
 bundle_app:
-  stage: build
-  script:
-    - npm run build 
+ stage: build
+ script:
+ - npm run build
+ artifacts:
+  paths:
+    - build/
 
-    #push///////
+e2etest:    
+  stage: test
+  script:
+    - echo "Run tests in headless mode"
+    - npm run start:ci
+
+    
