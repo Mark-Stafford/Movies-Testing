@@ -38,5 +38,14 @@ e2etest:
   script:
     - echo "Run tests in headless mode"
     - npm run start:ci
+    
+    
+test_jobX:
+  stage: test
+  only:
+    - main
+    - branchX
+  script:
+    - echo "Run test job X"
 
     
