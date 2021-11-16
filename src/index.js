@@ -6,12 +6,11 @@ import MoviePage from "./pages/movieDetailsPage";
 import FavoriteMoviesPage from "./pages/favoriteMoviesPage";
 import MovieReviewPage from "./pages/movieReviewPage";
 import MovieUpcomingPage from "./pages/upcomingMoviePage";
-import SiteHeader from './components/siteHeader';
+import SiteHeader from './components/siteHeader'
 import { QueryClientProvider, QueryClient } from "react-query";
 import { ReactQueryDevtools } from 'react-query/devtools';
 import MoviesContextProvider from "./contexts/moviesContext";
 import AddMovieReviewPage from './pages/addMovieReviewPage'
-
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -42,8 +41,8 @@ const App = () => {
       </Switch>
       </MoviesContextProvider>
     </BrowserRouter>
-      <ReactQueryDevtools initialIsOpen={false} />
-      </QueryClientProvider>
+    <ReactQueryDevtools initialIsOpen={false} />
+    </QueryClientProvider>
   );
 };
 

@@ -51,16 +51,15 @@ const useStyles = makeStyles((theme) => ({
     width: "40ch",
   },
   submit: {
-    
-        marginRight: theme.spacing(2),
-      },
-      snack: {
-         width: "50%",
-         "& > * ": {
-           width: "100%",
-         },
-       },
-    }));
+    marginRight: theme.spacing(2),
+  },
+  snack: {
+    width: "50%",
+    "& > * ": {
+      width: "100%",
+    },
+  },
+}));
 
 const ReviewForm = ({ movie, history }) => {
   const classes = useStyles();
@@ -69,13 +68,13 @@ const ReviewForm = ({ movie, history }) => {
   const [rating, setRating] = useState(3);
   const [open, setOpen] = React.useState(false); 
 
-  const handleRatingChange = (event) => {
-    setRating(event.target.value);
-  };
-
   const handleSnackClose = (event) => {     // NEW
     setOpen(false);
     history.push("/movies/favorites");
+  };
+
+  const handleRatingChange = (event) => {
+    setRating(event.target.value);
   };
 
   const onSubmit = (review) => {
@@ -85,13 +84,11 @@ const ReviewForm = ({ movie, history }) => {
     context.addReview(movie, review);
     setOpen(true);   // NEW
   };
-
   return (
     <Box component="div" className={classes.root}>
       <Typography component="h2" variant="h3">
         Write a review
       </Typography>
-
       <Snackbar
         className={classes.snack}
         anchorOrigin={{ vertical: "top", horizontal: "right" }}
