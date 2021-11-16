@@ -20,4 +20,6 @@ install_dependencies:
 bundle_app:
   stage: build
   script:
-    - npm run build
+    - npm run build 
+
+    #push///////
