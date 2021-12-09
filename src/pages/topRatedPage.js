@@ -19,7 +19,7 @@ const TopRatedMoviesPage = (props) => {
   const movies = data.results;
 
    
-
+//adding top rated movies to favs
   return (
     <PageTemplate
       title="Top Rated Movies"
