@@ -89,3 +89,21 @@ export const getMovie = (args) => {
        throw error
     });
   };
+
+  export const getMovieTopRated = () => {
+    var key = "77885d4f621d9af0c6c5c522b1c9df9d";
+    return fetch(
+      `https://api.themoviedb.org/3/movie/top_rated?api_key=${process.env.REACT_APP_TMDB_KEY}&language=en-US&page=1`
+    ).then((response) => {
+      if (!response.ok) {
+        throw new Error(response.json().message);
+      }
+      return response.json();
+    })
+    .catch((error) => {
+       throw error
+    });
+  };
+
+
+  
