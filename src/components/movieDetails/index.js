@@ -10,6 +10,7 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
 import MovieReviews from "../movieReviews"
+
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
@@ -53,6 +54,7 @@ const MovieDetails = ({ movie }) => {  // Don't miss this!
           </li>
         ))}
       </Paper>
+
       <Paper component="ul" className={classes.root}>
         <Chip icon={<AccessTimeIcon />} label={`${movie.runtime} min.`} />
         <Chip
@@ -65,9 +67,11 @@ const MovieDetails = ({ movie }) => {  // Don't miss this!
         />
         <Chip label={`Released: ${movie.release_date}`} />
       </Paper>
+
+      
       <Paper component="ul" className={classes.root}>
         <li>
-          <Chip label="Production Countries" className={classes.chip} color="primary" />
+          <Chip label="Prodcution Countries" className={classes.chip} color="primary" />
         </li>
         {movie.production_countries.map((g) => (
           <li key={g.name}>
@@ -91,5 +95,4 @@ const MovieDetails = ({ movie }) => {  // Don't miss this!
     </>
   );
 };
-
 export default  MovieDetails ;

@@ -1,12 +1,12 @@
-import React from "react";
+import React from "react";  // useState/useEffect redundant 
+import { useQuery } from "react-query";
+import Spinner from '../spinner'
 import MovieHeader from "../headerMovie";
 import Grid from "@material-ui/core/Grid";
 import { makeStyles } from "@material-ui/core/styles";
 import GridList from "@material-ui/core/GridList";
 import GridListTile from "@material-ui/core/GridListTile";
 import { getMovieImages } from "../../api/tmdb-api";
-import { useQuery } from "react-query";
-import Spinner from '../spinner'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -34,7 +34,7 @@ const TemplateMoviePage = ({ movie, children }) => {
   if (isError) {
     return <h1>{error.message}</h1>;
   }
-  const images = data.posters 
+  const images = data.posters
 
   return (
     <>

@@ -11,6 +11,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 import Snackbar from "@material-ui/core/Snackbar"; 
 import MuiAlert from "@material-ui/lab/Alert";
 
+
 const ratings = [
   {
     value: 5,
@@ -66,7 +67,7 @@ const ReviewForm = ({ movie, history }) => {
   const { register, handleSubmit, errors, reset } = useForm();
   const context = useContext(MoviesContext);
   const [rating, setRating] = useState(3);
-  const [open, setOpen] = React.useState(false); 
+  const [open, setOpen] = React.useState(false);  //NEW
 
   const handleSnackClose = (event) => {     // NEW
     setOpen(false);
@@ -80,10 +81,11 @@ const ReviewForm = ({ movie, history }) => {
   const onSubmit = (review) => {
     review.movieId = movie.id;
     review.rating = rating;
-    // console.log(review);
+    console.log(review);
     context.addReview(movie, review);
     setOpen(true);   // NEW
   };
+
   return (
     <Box component="div" className={classes.root}>
       <Typography component="h2" variant="h3">

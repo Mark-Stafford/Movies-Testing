@@ -16,5 +16,5 @@ const AddToFavoritesIcon = ({ movie }) => {
     </IconButton>
   );
 };
-//commented 
+
 export default AddToFavoritesIcon;
