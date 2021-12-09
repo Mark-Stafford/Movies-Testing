@@ -13,6 +13,9 @@ import { withRouter } from "react-router-dom";
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 
+
+
+
 const useStyles = makeStyles((theme) => ({
   title: {
     flexGrow: 1,
@@ -32,6 +35,7 @@ const SiteHeader = ( { history }) => {
     { label: "Favorites", path: "/movies/favorites" },
     { label: "Upcoming", path: "/movies/upcoming" },
     { label: "Top Rated", path: "/movies/top-rated" },
+    { label: "Tv Shows", path: "/tv/discovertv" }
   ];
 
   const handleMenuSelect = (pageURL) => {

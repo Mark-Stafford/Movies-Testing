@@ -1,3 +1,4 @@
+
 import { BrowserRouter, Route, Redirect, Switch } from "react-router-dom";
 import ReactDOM from "react-dom";
 import HomePage from "./pages/homePage";
@@ -10,7 +11,11 @@ import TopRatedMoviesPage from "./pages/topRatedPage";
 import { QueryClientProvider, QueryClient } from "react-query";
 import { ReactQueryDevtools } from 'react-query/devtools'
 import MoviesContextProvider from "./contexts/moviesContext";
-import AddMovieReviewPage from './pages/addMovieReviewPage'
+import AddMovieReviewPage from './pages/addMovieReviewPage';
+import TvDetailPage from "./pages/tvDetailsPage";
+import TvPage from './pages/tvPage';
+
+
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -32,11 +37,13 @@ const App = () => {
       <Switch>
       <Route exact path="/movies/top-rated" component={TopRatedMoviesPage} />
       <Route exact path="/reviews/form" component={AddMovieReviewPage} />
+      <Route exact path="/tv/discovertv" component={TvPage} />
       <Route exact path="/movies/upcoming" component={UpcomingMoviesPage} />
       <Route path="/reviews/:id" component={MovieReviewPage} />
         <Route exact path="/movies/favorites" component={FavoriteMoviesPage} />
         <Route path="/movies/:id" component={MoviePage} />
         <Route exact path="/" component={HomePage} />
+        <Route path="/tv/:id" component={TvDetailPage} />
         <Redirect from="*" to="/" />
       </Switch>
       </MoviesContextProvider>

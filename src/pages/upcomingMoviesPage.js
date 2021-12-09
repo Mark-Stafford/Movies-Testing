@@ -24,6 +24,7 @@ const UpcomingMoviesPage = (props) => {
     <PageTemplate
       title="Upcoming Movies"
       movies={movies}
+      
       action={(movie) => {
         return <AddToPlaylistIcon movie={movie} />
       }}
