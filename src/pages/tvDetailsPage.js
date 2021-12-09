@@ -6,7 +6,7 @@ import { getTv } from '../api/tmdb-api'
 import { useQuery } from "react-query";
 import Spinner from '../components/spinner'
 
-//tv shows page done
+//tv shows page done and more info
 const TvDetailsPage = (props) => {
   const { id } = props.match.params;
   const { data: tv, error, isLoading, isError } = useQuery(
