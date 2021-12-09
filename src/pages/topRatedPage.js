@@ -5,7 +5,7 @@ import Spinner from '../components/spinner'
 import {getTopRatedMovies} from '../api/tmdb-api'
 import  AddToFavouriteIcon from "../components/cardIcons/addToFavorites"
 
-
+//top rated page movies
 const TopRatedMoviesPage = (props) => {
   const {  data, error, isLoading, isError }  = useQuery('top-rated', getTopRatedMovies)
 
