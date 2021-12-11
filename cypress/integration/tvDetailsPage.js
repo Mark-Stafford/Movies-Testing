@@ -1,4 +1,4 @@
-let tvId = 2778; // Wheel Of Fortune
+let tvId = 2778; 
 let tv;
 let reviews;
 

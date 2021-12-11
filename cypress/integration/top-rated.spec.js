@@ -1,5 +1,5 @@
 let movies;    // List of movies from TMDB
-
+//testing done for top rated
 // Utility functions
 const filterByTitle = (movieList, string) =>
   movieList.filter((m) => m.title.toLowerCase().search(string) !== -1);
