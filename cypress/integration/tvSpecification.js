@@ -62,6 +62,21 @@ describe("Tv Page ", () => {
 
      });
       });
+
+      it("Navagation Between Home Page and Tv Show Page", () => {
+        cy.wait(1500);
+
+        cy.get("header").find(".MuiToolbar-root").find("button").eq(0).click();  //go back home using header
+        cy.get("h3").contains("Discover Movies"); //check my page is home
+
+        cy.get("button[aria-label='go back'").click();  //use back button to go back 
+        cy.get("h3").contains("Discover Tv Shows"); //check page is Tv Shows Page
+        cy.wait(1500);
+
+        cy.get("button[aria-label='go forward'").click();  //use forword button to go back home
+        cy.get("h3").contains("Discover Movies");  //check im back home
+});
+
       
          describe("By tv title and genre", () => {
             it("should only display tv with the specified title in a genre", () => {
