@@ -12,7 +12,7 @@ const filterByGenreAndTitle = (movieList, genreId, string) =>
 
 describe("Top Rated page ", () => {
   before(() => {
-    // Get movies from TMDB and store in movies variable.
+    // Get top rated movies from TMDB and store in movies variable.
     cy.request(
       `https://api.themoviedb.org/3/movie/top_rated?api_key=${Cypress.env(
         "TMDB_KEY"
@@ -114,5 +114,42 @@ describe("Top Rated page ", () => {
    });
   });
 
+
+  describe("Navagation Tests", () => {     
+
+    before(() => {
+      cy.request(
+        `https://api.themoviedb.org/3/movie/top_rated?api_key=${Cypress.env(
+          "TMDB_KEY"
+        )}&language=en-US&include_adult=false&include_video=false&page=1`
+      )
+        .its("body")    // Take the body of HTTP response from TMDB
+        .then((response) => {
+          movies = response.results
+        })
+    })
+
+        
+  beforeEach(() => {
+    cy.visit("/movies/top_rated")
+  });
+
+
+describe("Favorite Testing", () => {    
+  it("Adding a favourite from top rated page", () => { 
+
+    cy.get("header").find(".MuiToolbar-root").find("button").eq(3).click();  //use header to go to trending
+    cy.get("h3").contains("Top Rated Movies");  //check page is trending
+
+    cy.get("button[aria-label='add to favorites']").eq(0).click();  //get 1st card favourite button and click it 
+    cy.get("header").find(".MuiToolbar-root").find("button").eq(2).click(); //check favourites page to see if its there 
+    cy.get(".MuiCardActions-root").eq(0)
+
+});
+
+
+
+});
   
+  });
  
