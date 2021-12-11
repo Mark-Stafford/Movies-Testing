@@ -75,8 +75,8 @@ describe("Top Rated page ", () => {
 
   describe("By movie genre", () => {
     it("should display movies with the specified genre only", () => {
-       const selectedGenreId = 35;
-       const selectedGenreText = "Comedy";
+       const selectedGenreId = 18;
+       const selectedGenreText = "Drama";
        const matchingMovies = filterByGenre(movies, selectedGenreId);
        cy.get("#genre-select").click();
        cy.get("li").contains(selectedGenreText).click();
@@ -152,4 +152,4 @@ describe("Favorite Testing", () => {
 });
   
   });
- //test to be continued
+ 
