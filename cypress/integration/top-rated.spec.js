@@ -60,6 +60,7 @@ describe("Top Rated page ", () => {
             cy.wrap($card).find("p").contains(matchingMovies[index].title);
           });
         });
+        
       it("should only display movies with xyz in the title", () => {
         let searchString = "xyz";
         let matchingMovies = filterByTitle(movies, searchString);
