@@ -16,7 +16,6 @@ import MoviesContextProvider from "./contexts/moviesContext";
 import AddMovieReviewPage from './pages/addMovieReviewPage';
 import TvDetailPage from "./pages/tvDetailsPage";
 import TvPage from './pages/tvPage';
-import { AuthContextProvider,useAuthState } from './firebase-config';
 import NowPlayingPage from "./pages/NowPlayingPage";
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -27,19 +26,7 @@ const queryClient = new QueryClient({
     },
   },
 });
-const AuthenicatedRoute = ({component:C,...props}) => {
-  const {isAuthenticated} = useAuthState()
-  return (
-    <Route
-    {...props}
-    render={routeProps =>
-    isAuthenticated ? <C {...routeProps}/> : <Redirect to="/login" />
-    } 
-    
-    />
-  )
-  
-} 
+
 
 
 
