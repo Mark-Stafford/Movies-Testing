@@ -1,5 +1,5 @@
 let movies;
-const movieId =  335983; // The movie Venom id
+const movieId =  335983;
 let reviews;
 
 describe("Navigation", () => {
