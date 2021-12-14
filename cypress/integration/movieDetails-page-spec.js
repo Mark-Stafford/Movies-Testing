@@ -1,4 +1,4 @@
-let movieId = 335983; // The movie Venom
+let movieId = 335983; 
 let movie;
 let reviews;
 
