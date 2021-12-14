@@ -1,154 +1,78 @@
-import {
-    Button,
-    chakra,
-    FormControl,
-    FormLabel,
-    Heading,
-    HStack,
-    Input,
-    Stack,
-    useToast,
-  } from '@chakra-ui/react'
-  import React, { useState } from 'react'
-  import { Link, useHistory, useLocation } from 'react-router-dom'
-  import { Card } from '../components/Card'
-  import DividerWithText from '../components/DividerWithText'
-  import { Layout } from '../components/Layout'
-  import { useAuth } from '../contexts/AuthContext'
-  import useMounted from '../hooks/useMounted'
+import { useState } from "react";
+import {signInWithEmailAndPassword,onAuthStateChanged,signOut,} from "firebase/auth";
+import { auth } from "../firebase-config";
+import { Link } from "react-router-dom";
+
+
+
+const LoginPage = (props) => {
+
+    
+    const [loginEmail, setLoginEmail] = useState("");
+    const [loginPassword, setLoginPassword] = useState("");
   
-  export default function Loginpage() {
-    const history = useHistory()
-    const { signInWithGoogle, login } = useAuth()
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
-    const [isSubmitting, setIsSubmitting] = useState(false)
-    const toast = useToast()
-    // const mounted = useRef(false)
-    const location = useLocation()
+    const [user, setUser] = useState({});
   
-    // useEffect(() => {
-    //   mounted.current = true
-    //   return () => {
-    //     mounted.current = false
-    //   }
-    // }, [])
+    onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+    });
   
-    const mounted = useMounted()
+    
   
-    function handleRedirectToOrBack() {
-      // console.log(location?.state)
-      history.replace(location.state?.from ?? '/profile')
-      // if (location.state) {
-      //   history.replace(location.state?.from)
-      // } else {
-      //   history.replace('/profile')
-      // }
-    }
+    const login = async () => {
+      try {
+        const user = await signInWithEmailAndPassword(
+          auth,
+          loginEmail,
+          loginPassword
+        );
+        console.log(user);
+        alert('Login Succesful')
+
+      } catch (error) {
+     console.log(error.message);
+     alert('Incorrect Email or Password')
+
+
+      }
+    };
+  
+    const logout = async () => {
+      await signOut(auth);
+    };
   
     return (
-      <Layout>
-        <Heading textAlign='center' my={12}>
-          Login
-        </Heading>
-        <Card maxW='md' mx='auto' mt={4}>
-          <chakra.form
-            onSubmit={async e => {
-              e.preventDefault()
-              if (!email || !password) {
-                toast({
-                  description: 'Credentials not valid.',
-                  status: 'error',
-                  duration: 9000,
-                  isClosable: true,
-                })
-                return
-              }
-              // your login logic here
-              setIsSubmitting(true)
-              login(email, password)
-                .then(res => {
-                  handleRedirectToOrBack()
-                })
-                .catch(error => {
-                  console.log(error.message)
-                  toast({
-                    description: error.message,
-                    status: 'error',
-                    duration: 9000,
-                    isClosable: true,
-                  })
-                })
-                .finally(() => {
-                  // setTimeout(() => {
-                  //   mounted.current && setIsSubmitting(false)
-                  //   console.log(mounted.current)
-                  // }, 1000)
-                  mounted.current && setIsSubmitting(false)
-                })
-            }}
-          >
-            <Stack spacing='6'>
-              <FormControl id='email'>
-                <FormLabel>Email address</FormLabel>
-                <Input
-                  name='email'
-                  type='email'
-                  autoComplete='email'
-                  required
-                  value={email}
-                  onChange={e => setEmail(e.target.value)}
-                />
-              </FormControl>
-              <FormControl id='password'>
-                <FormLabel>Password</FormLabel>
-                <Input
-                  name='password'
-                  type='password'
-                  autoComplete='password'
-                  value={password}
-                  required
-                  onChange={e => setPassword(e.target.value)}
-                />
-              </FormControl>
-              {/* <PasswordField /> */}
-              <Button
-                type='submit'
-                colorScheme='pink'
-                size='lg'
-                fontSize='md'
-                isLoading={isSubmitting}
-              >
-                Sign in
-              </Button>
-            </Stack>
-          </chakra.form>
-          <HStack justifyContent='space-between' my={4}>
-            <Button variant='link'>
-              <Link to='/forgot-password'>Forgot password?</Link>
-            </Button>
-            <Button variant='link' onClick={() => history.push('/register')}>
-              Register
-            </Button>
-          </HStack>
-          <DividerWithText my={6}>OR</DividerWithText>
-          <Button
-            variant='outline'
-            isFullWidth
-            colorScheme='red'
-            onClick={() =>
-              signInWithGoogle()
-                .then(user => {
-                  handleRedirectToOrBack()
-                  console.log(user)
-                })
-                .catch(e => console.log(e.message))
-            }
-          >
-            Sign in with Google
-          </Button>
-        </Card>
-      </Layout>
-    )
-  }
+       
+     <div>
   
+        <div>
+          <h3> Login </h3>
+          <input
+            placeholder="Email..."
+            onChange={(event) => {
+              setLoginEmail(event.target.value);
+            }}
+          />
+          <input
+            placeholder="Password..."
+            onChange={(event) => {
+              setLoginPassword(event.target.value);
+            }}
+          />
+          
+          <button aria-label ='Login' onClick={login}> Login</button>
+       
+        </div>
+  
+        <h4> User Logged In: {user?.email}</h4>
+        <button aria-label = 'SignOut' onClick={logout}> Sign Out </button>
+
+        <Link to={`/signup`}>
+        <h4>Register</h4>
+        </Link>
+      </div>
+   
+    );
+  }
+
+export default LoginPage

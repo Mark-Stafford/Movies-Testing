@@ -4,6 +4,8 @@ import ReactDOM from "react-dom";
 import HomePage from "./pages/homePage";
 import MoviePage from "./pages/movieDetailsPage";
 import FavoriteMoviesPage from "./pages/favoriteMoviesPage"; // NEW
+import loginPage from "./pages/loginPage";
+import signUpPage from "./pages/signUpPage";
 import MovieReviewPage from "./pages/movieReviewPage";
 import SiteHeader from './components/siteHeader';
 import UpcomingMoviesPage from "./pages/upcomingMoviesPage";
@@ -14,9 +16,7 @@ import MoviesContextProvider from "./contexts/moviesContext";
 import AddMovieReviewPage from './pages/addMovieReviewPage';
 import TvDetailPage from "./pages/tvDetailsPage";
 import TvPage from './pages/tvPage';
-
-
-
+import { AuthContextProvider,useAuthState } from './firebase-config';
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
@@ -26,6 +26,23 @@ const queryClient = new QueryClient({
     },
   },
 });
+const AuthenicatedRoute = ({component:C,...props}) => {
+  const {isAuthenticated} = useAuthState()
+  return (
+    <Route
+    {...props}
+    render={routeProps =>
+    isAuthenticated ? <C {...routeProps}/> : <Redirect to="/login" />
+    } 
+    
+    />
+  )
+  
+} 
+
+
+
+
 
 const App = () => {
   return (
@@ -44,6 +61,8 @@ const App = () => {
         <Route path="/movies/:id" component={MoviePage} />
         <Route exact path="/" component={HomePage} />
         <Route path="/tv/:id" component={TvDetailPage} />
+        <Route exact path="/login" component={loginPage} />
+        <Route exact path="/signup" component={signUpPage} />
         <Redirect from="*" to="/" />
       </Switch>
       </MoviesContextProvider>

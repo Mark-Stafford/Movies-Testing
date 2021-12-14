@@ -1,6 +1,6 @@
 import { initializeApp } from "firebase/app";
-import { getAuth } from "firebase/auth";
-
+import { getAuth,onAuthStateChanged } from "firebase/auth";
+import { useState,useEffect,useContext,createContext } from "react";
 
 //Todo fix with environment varaibles
 
@@ -18,3 +18,22 @@ const firebaseConfig = {
   const app = initializeApp(firebaseConfig);
 
   export const auth = getAuth(app);
+export const AuthContext = createContext()
+export const AuthContextProvider = props =>{
+  const [user,setUser] = useState()
+  const[error,setError] = useState()
+
+  useEffect(()=>{
+    const unsubscribe = onAuthStateChanged(getAuth(),setUser,setError)
+    return()=>unsubscribe()
+  },[])
+return <AuthContext.Provider value={{user,error}}{...props}/>
+}
+
+export const useAuthState = () => {
+  const auth = useContext(AuthContext)
+  return{...auth,isAuthenticated: auth.user != null}
+}
+
+
+
