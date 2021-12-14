@@ -41,7 +41,19 @@ Login = /login
 Register = /signup
 
 UI:
-All pictures are in the imageRM folder of my User Interface.
+
+login/register page 
+https://user-images.githubusercontent.com/60115176/146037332-f5220f78-daad-4c77-b250-7d4d79658fc2.png
+
+Top Rated page 
+https://user-images.githubusercontent.com/60115176/146039010-4e92786a-1c55-46b5-b273-faf248b76767.png
+
+Now playing Page 
+https://user-images.githubusercontent.com/60115176/146038996-b840cfb5-74a5-48b4-8e3c-de011bea331e.png
+
+Tv Show page 
+https://user-images.githubusercontent.com/60115176/146039393-fe4d8c27-6f6a-41a8-8f0f-60067698cd9d.png
+
 
 
 
