@@ -1,18 +1,16 @@
 
 Name: Mark Stafford
 
-//overview 
+overview
+This app is used along side the tmdb movie api using react
 
 CA 1 web development movies app
 
 ### Features. 
  Upcoming Movies Page
-
- Add to playlist button, no functionality just prints to console
- top rated movies 
- Can add top rated movies to favorites movies
+ Add to playlist button
  Tv shows page added
- Can see more info and reviews about these tv shows
+ Can see more info about these
  Upcoming Movies Page
  Add them favourites
  Now Playing Movie page 
@@ -22,19 +20,25 @@ CA 1 web development movies app
  Tv shows page
  Tv show details page
  More info and reviews 
+ search functionality on each page
  Login/register page
  Register then adds to google firebase
  sign out also
+ firebase
  
 
 API Endpoints
-/login
 /movies/favorites
+/movie/:id
+/genre/movie/list
 /movies/top-rated
+/movies/now-playing
 /movies/upcoming
 /tv/discovertv
-/register
-/forgot-password
+
+Routing
+Login = /login
+Register = /signup
 
 UI:
 All pictures are in the imageRM folder of my User Interface.

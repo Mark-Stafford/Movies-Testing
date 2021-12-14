@@ -1,5 +1,5 @@
 let movies;    // List of movies from TMDB
-//testing done for top rated
+//testing done for now playing
 // Utility functions
 const filterByTitle = (movieList, string) =>
   movieList.filter((m) => m.title.toLowerCase().search(string) !== -1);
@@ -10,11 +10,11 @@ const filterByGenre = (movieList, genreId) =>
 const filterByGenreAndTitle = (movieList, genreId, string) =>
   movieList.filter((m) => m.genre_ids.includes(genreId) && m.title.toLowerCase().search(string) !== -1);
 
-describe("Top Rated page ", () => {
+describe("Now Playing page ", () => {
   before(() => {
     // Get top rated movies from TMDB and store in movies variable.
     cy.request(
-      `https://api.themoviedb.org/3/movie/top_rated?api_key=${Cypress.env(
+      `https://api.themoviedb.org/3/movie/now_playing?api_key=${Cypress.env(
         "TMDB_KEY"
       )}&language=en-US&include_adult=false&include_video=false&page=1`
     )
@@ -24,22 +24,22 @@ describe("Top Rated page ", () => {
       })
   })
   beforeEach(() => {
-    cy.visit("/movies/top-rated")
+    cy.visit("/movies/now-playing")
   });
 
   describe("Base tests", () => {
     it("displays page header", () => {
-        cy.get("h3").contains("Top Rated Movies");
+        cy.get("h3").contains("Now Playing Movies");
         cy.get("h1").contains("Filter the movies");
       });
   });
 
   describe("Filtering", () => {
     describe("By movie title", () => {
-        it("should only display movies with m in the title", () => {
-          let searchString = "m";
+        it("should only display movies with p in the title", () => {
+          let searchString = "p";
           let matchingMovies = filterByTitle(movies, searchString);
-          cy.get("#filled-search").clear().type(searchString); 
+          cy.get("#filled-search").clear().type(searchString); // Enter p in text box
           cy.get(".MuiCardHeader-content").should(
             "have.length",
             matchingMovies.length
@@ -48,17 +48,15 @@ describe("Top Rated page ", () => {
             cy.wrap($card).find("p").contains(matchingMovies[index].title);
           });
         })
-        it("should only display movies with o in the title", () => {
-          let searchString = "o";
+        it("should only display movies with c in the title", () => {
+          let searchString = "c";
           let matchingMovies = filterByTitle(movies, searchString);
-          cy.get("#filled-search").clear().type(searchString); 
+          cy.get("#filled-search").clear().type(searchString); // Enter c in text box
           cy.get(".MuiCardHeader-content").should(
             "have.length",
             matchingMovies.length
           );
-          cy.get(".MuiCardHeader-content").each(($card, index) => {
-            cy.wrap($card).find("p").contains(matchingMovies[index].title);
-          });
+    
         });
         
       it("should only display movies with xyz in the title", () => {
@@ -119,7 +117,7 @@ describe("Top Rated page ", () => {
 
     before(() => {
       cy.request(
-        `https://api.themoviedb.org/3/movie/top_rated?api_key=${Cypress.env(
+        `https://api.themoviedb.org/3/movie/now_playing?api_key=${Cypress.env(
           "TMDB_KEY"
         )}&language=en-US&include_adult=false&include_video=false&page=1`
       )
@@ -131,18 +129,18 @@ describe("Top Rated page ", () => {
 
         
   beforeEach(() => {
-    cy.visit("/movies/top_rated")
+    cy.visit("/movies/now_playing")
   });
 
 
 describe("Favorite Testing", () => {    
-  it("Adding a favourite from top rated page", () => { 
+  it("Adding a favourite from now playing page", () => { 
 
-    cy.get("header").find(".MuiToolbar-root").find("button").eq(3).click();  //use header to go to trending
-    cy.get("h3").contains("Top Rated Movies");  //check page is top rated
+    cy.get("header").find(".MuiToolbar-root").find("button").eq(5).click();  
+    cy.get("h3").contains("Now Playing Movies");  
 
-    cy.get("button[aria-label='add to favorites']").eq(0).click();  //get 1st card favourite button and click it 
-    cy.get("header").find(".MuiToolbar-root").find("button").eq(2).click(); //check favourites page to see if its there 
+    cy.get("button[aria-label='add to favorites']").eq(0).click();  
+    cy.get("header").find(".MuiToolbar-root").find("button").eq(2).click(); 
     cy.get(".MuiCardActions-root").eq(0)
 
 });
