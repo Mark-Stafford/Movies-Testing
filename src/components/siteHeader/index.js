@@ -29,15 +29,16 @@ const SiteHeader = ( { history }) => {
   const open = Boolean(anchorEl);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+  
 
   const menuOptions = [
     { label: "Home", path: "/" },
     { label: "Favorites", path: "/movies/favorites" },
-    { label: "Upcoming", path: "/movies/upcoming" },
-    { label: "Top Rated", path: "/movies/top-rated" },
-    { label: "Tv Shows", path: "/tv/discovertv" },
-    { label: "Now Playing", path: "/movies/now-playing" },
-    { label: "Login", path: "/login"}
+    { label: "Upcoming", path: "/upcoming" },
+    { label: "Top Rated", path: "/top-rated" },
+    { label: "Tv Shows", path: "tv/discovertv" },
+    { label: "Now Playing", path: "/movies/now-playing" }
+   
   ];
 
   const handleMenuSelect = (pageURL) => {
@@ -48,6 +49,7 @@ const SiteHeader = ( { history }) => {
     setAnchorEl(event.currentTarget);
   };
 
+  
   return (
     <>
       <AppBar position="fixed" color="secondary">
@@ -58,6 +60,8 @@ const SiteHeader = ( { history }) => {
           <Typography variant="h6" className={classes.title}>
             All you ever wanted to know about Movies!
           </Typography>
+
+          
             {isMobile ? (
               <>
                 <IconButton

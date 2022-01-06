@@ -1,79 +1,52 @@
-import React, { createContext, useContext, useEffect, useState } from 'react'
-import { auth } from '../utils/init-firebase'
-import {
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-  sendPasswordResetEmail,
-  onAuthStateChanged,
-  signInWithPopup,
-  GoogleAuthProvider,
-  signOut,
-  confirmPasswordReset,
-} from 'firebase/auth'
+import React, { useState, createContext } from "react";
+import { login, signup } from "../api/movie-api";
 
-const AuthContext = createContext({
-  currentUser: null,
-  signInWithGoogle: () => Promise,
-  login: () => Promise,
-  register: () => Promise,
-  logout: () => Promise,
-  forgotPassword: () => Promise,
-  resetPassword: () => Promise,
-})
+export const AuthContext = createContext(null);
 
-export const useAuth = () => useContext(AuthContext)
+const AuthContextProvider = (props) => {
+  const existingToken = localStorage.getItem("token");
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [authToken, setAuthToken] = useState(existingToken);
+  const [userName, setUserName] = useState("");
 
-export default function AuthContextProvider({ children }) {
-  const [currentUser, setCurrentUser] = useState(null)
+  //Function to put JWT token in local storage.
+  const setToken = (data) => {
+    localStorage.setItem("token", data);
+    setAuthToken(data);
+  }
 
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, user => {
-      setCurrentUser(user ? user : null)
-    })
-    return () => {
-      unsubscribe()
+  const authenticate = async (username, password) => {
+    const result = await login(username, password);
+    if (result.token) {
+      setToken(result.token)
+      setIsAuthenticated(true);
+      setUserName(username);
     }
-  }, [])
+  };
 
-  useEffect(() => {
-    console.log('The user is', currentUser)
-  }, [currentUser])
+  const register = async (username, password) => {
+    const result = await signup(username, password);
+    console.log(result.code);
+    return (result.code == 201) ? true : false;
+  };
 
-  function login(email, password) {
-    return signInWithEmailAndPassword(auth, email, password)
+  const signout = () => {
+    setTimeout(() => setIsAuthenticated(false), 100);
   }
 
-  function register(email, password) {
-    return createUserWithEmailAndPassword(auth, email, password)
-  }
+  return (
+    <AuthContext.Provider
+      value={{
+        isAuthenticated,
+        authenticate,
+        register,
+        signout,
+        userName
+      }}
+    >
+      {props.children}
+    </AuthContext.Provider>
+  );
+};
 
-  function forgotPassword(email) {
-    return sendPasswordResetEmail(auth, email, {
-      url: `http://localhost:3000/login`,
-    })
-  }
-
-  function resetPassword(oobCode, newPassword) {
-    return confirmPasswordReset(auth, oobCode, newPassword)
-  }
-
-  function logout() {
-    return signOut(auth)
-  }
-
-  function signInWithGoogle() {
-    const provider = new GoogleAuthProvider()
-    return signInWithPopup(auth, provider)
-  }
-
-  const value = {
-    currentUser,
-    signInWithGoogle,
-    login,
-    register,
-    logout,
-    forgotPassword,
-    resetPassword,
-  }
-  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
-}
+export default AuthContextProvider; 
