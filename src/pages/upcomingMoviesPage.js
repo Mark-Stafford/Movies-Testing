@@ -5,7 +5,7 @@ import Spinner from '../components/spinner'
 import {getUpcomingMovies} from '../api/movie-api'
 import  AddToPlaylistIcon from "../components/cardIcons/addToPlaylist"
 
-
+//now connected to new api 
 const UpcomingMoviesPage = (props) => {
   const {  data, error, isLoading, isError }  = useQuery('upcoming', getUpcomingMovies)
 
