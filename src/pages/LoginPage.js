@@ -1,78 +1,48 @@
-import { useState } from "react";
-import {signInWithEmailAndPassword,onAuthStateChanged,signOut,} from "firebase/auth";
-import { auth } from "../firebase-config";
+import React, { useContext, useState } from "react";
+import { Redirect } from "react-router-dom";
+import { AuthContext } from '../contexts/authContext';
 import { Link } from "react-router-dom";
 
 
+const LoginPage = props => {
+  const context = useContext(AuthContext)
+  const [userName, setUserName] = useState("");
+  const [password, setPassword] = useState("");
 
-const LoginPage = (props) => {
+  const login = () => {
+    context.authenticate(userName, password);
+  };
 
-    
-    const [loginEmail, setLoginEmail] = useState("");
-    const [loginPassword, setLoginPassword] = useState("");
-  
-    const [user, setUser] = useState({});
-  
-    onAuthStateChanged(auth, (currentUser) => {
-      setUser(currentUser);
-    });
-  
-    
-  
-    const login = async () => {
-      try {
-        const user = await signInWithEmailAndPassword(
-          auth,
-          loginEmail,
-          loginPassword
-        );
-        console.log(user);
-        alert('Login Succesful')
+  // Set 'from' to path where browser is redirected after a successful login.
+  // Either / or the protected path user tried to access.
+  const { from } = props.location.state || { from: { pathname: "/" } };
 
-      } catch (error) {
-     console.log(error.message);
-     alert('Incorrect Email or Password')
-
-
-      }
-    };
-  
-    const logout = async () => {
-      await signOut(auth);
-    };
-  
-    return (
-       
-     <div>
-  
-        <div>
-          <h3> Login </h3>
-          <input
-            placeholder="Email..."
-            onChange={(event) => {
-              setLoginEmail(event.target.value);
-            }}
-          />
-          <input
-            placeholder="Password..."
-            onChange={(event) => {
-              setLoginPassword(event.target.value);
-            }}
-          />
-          
-          <button aria-label ='Login' onClick={login}> Login</button>
-       
-        </div>
-  
-        <h4> User Logged In: {user?.email}</h4>
-        <button aria-label = 'SignOut' onClick={logout}> Sign Out </button>
-
-        <Link to={`/signup`}>
-        <h4>Register</h4>
-        </Link>
-      </div>
-   
-    );
+  if (context.isAuthenticated === true) {
+    return <Redirect to={from} />;
   }
+  return  (
 
-export default LoginPage
+  
+
+    <>
+    
+      <h1>Please login to continue</h1>
+      <input id="username" placeholder="user name" onChange={e => {
+        setUserName(e.target.value);
+      }}></input><br />
+      <input id="password" type="password" placeholder="password" onChange={e => {
+        setPassword(e.target.value);
+      }}></input><br />
+      {/* Login web form  */}
+
+
+
+      
+      <button onClick={login} id="login-button">Log in</button>
+      <i><p>Not Registered?
+      <Link to="/signup">Sign Up!</Link></p></i>
+    </>
+  );
+};
+
+export default LoginPage;

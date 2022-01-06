@@ -1,70 +1,44 @@
-import { useState } from "react";
-import {createUserWithEmailAndPassword,onAuthStateChanged} from "firebase/auth";
-import { auth } from "../firebase-config";
+import React, { useContext, useState } from "react";
+import { Redirect } from "react-router-dom";
+import { AuthContext } from '../contexts/authContext';
 
+const SignUpPage = props => {
+  const context = useContext(AuthContext)
+  const [userName, setUserName] = useState("");
+  const [password, setPassword] = useState("");
+  const [passwordAgain, setPasswordAgain] = useState("");
+  const [registered, setRegistered] = useState(false);
 
-const SignUpPage = (props) => {
-  
+  const register = () => {
+    if (password.length > 0 && password === passwordAgain) {
+      context.register(userName, password);
+      setRegistered(true);
+    }
+  }
 
-    const [registerEmail, setRegisterEmail] = useState("")
-    const [registerPassword, setRegisterPassword] = useState("");
+  const { from } = props.location.state || { from: { pathname: "/" } };
 
-    const [ user,setUser] = useState({});
-  
-    onAuthStateChanged(auth, (currentUser) => {
-      setUser(currentUser);
-    });
-  
-    const register = async () => {
-      try {
-        // eslint-disable-next-line no-unused-vars
-        const user = await createUserWithEmailAndPassword(
-          auth,
-          registerEmail,
-          registerPassword
-        );
-        alert('Succesfully Registered')
-    } catch (error) {
-        console.log(error.message);
-       alert('Email or Password Invalid')
-        
+  if (registered === true) {
+    return <Redirect to="./login" />;
+  }
 
-      }
-    };
+  return (
+    <>
+      <h2>SignUp page</h2>
+      <p>You must register a username and password to log in </p>
+      <input value={userName} placeholder="user name" onChange={e => {
+        setUserName(e.target.value);
+      }}></input><br />
+      <input value={password} type="password" placeholder="password" onChange={e => {
+        setPassword(e.target.value);
+      }}></input><br />
+      <input value={passwordAgain} type="password" placeholder="password again" onChange={e => {
+        setPasswordAgain(e.target.value);
+      }}></input><br />
+      {/* Login web form  */}
+      <button onClick={register}>Register</button>
+    </>
+  );
+};
 
-    
-    return (
-       
-        <div className="App">
-          <div>
-            <h3> Register User </h3>
-            <input 
-              placeholder="Email..."
-              onChange={(event) => {
-                setRegisterEmail(event.target.value);
-              }}
-              
-            />
-            
-            <input
-              placeholder="Password..."
-              onChange={(event) => {
-                setRegisterPassword(event.target.value);
-              }}
-            />
-    
-            <button aria-label = 'Register' onClick={register}> Create User</button>
-            <h4> User Registered:    {user?.email}</h4>
-    
-          </div>
-              
-          
-          </div>
-    
-);
-
-
-}
-
-
-export default SignUpPage
+export default SignUpPage; 

@@ -4,8 +4,6 @@ import ReactDOM from "react-dom";
 import HomePage from "./pages/homePage";
 import MoviePage from "./pages/movieDetailsPage";
 import FavoriteMoviesPage from "./pages/favoriteMoviesPage"; // NEW
-import LoginPage from "./pages/LoginPage";
-import signUpPage from "./pages/signUpPage";
 import MovieReviewPage from "./pages/movieReviewPage";
 import SiteHeader from './components/siteHeader';
 import UpcomingMoviesPage from "./pages/upcomingMoviesPage";
@@ -13,10 +11,17 @@ import TopRatedMoviesPage from "./pages/topRatedPage";
 import { QueryClientProvider, QueryClient } from "react-query";
 import { ReactQueryDevtools } from 'react-query/devtools'
 import MoviesContextProvider from "./contexts/moviesContext";
+import PrivateRoute from "./privateRoute";
 import AddMovieReviewPage from './pages/addMovieReviewPage';
+import LoginPage from "./pages/LoginPage";
 import TvDetailPage from "./pages/tvDetailsPage";
 import TvPage from './pages/tvPage';
 import NowPlayingPage from "./pages/NowPlayingPage";
+
+import AuthProvider from "./contexts/authContext";
+import signUpPage from "./pages/signUpPage";
+import AuthHeader from "./authHeader";
+
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
@@ -35,26 +40,31 @@ const App = () => {
   return (
     <QueryClientProvider client={queryClient}>
     <BrowserRouter>
-    <SiteHeader />      {/* New Header  */}
+      
+    <AuthProvider>
+    <SiteHeader /> 
+    <AuthHeader />      {/* New Header  */}
     <MoviesContextProvider>
             {" "}
       <Switch>
       <Route exact path="/movies/now-playing" component={NowPlayingPage} />
-      <Route exact path="/movies/top-rated" component={TopRatedMoviesPage} />
+      <PrivateRoute exact path="/top-rated" component={TopRatedMoviesPage} />
       <Route exact path="/reviews/form" component={AddMovieReviewPage} />
-      <Route exact path="/tv/discovertv" component={TvPage} />
-      <Route exact path="/movies/upcoming" component={UpcomingMoviesPage} />
+      <Route exact path="/discovertv" component={TvPage} />
+      <PrivateRoute exact path="/upcoming" component={UpcomingMoviesPage} />
       <Route path="/reviews/:id" component={MovieReviewPage} />
         <Route exact path="/movies/favorites" component={FavoriteMoviesPage} />
         <Route path="/movies/:id" component={MoviePage} />
+        
         <Route exact path="/" component={HomePage} />
         <Route path="/tv/:id" component={TvDetailPage} />
        
-        <Route exact path="/login" component={LoginPage} />
+        <Route exact path="/login" component={LoginPage} /> 
         <Route exact path="/signup" component={signUpPage} />
-        <Redirect from="*" to="/" />
+        <Redirect from="*" to="/login" />
       </Switch>
       </MoviesContextProvider>
+      </AuthProvider>
     </BrowserRouter>
     <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
